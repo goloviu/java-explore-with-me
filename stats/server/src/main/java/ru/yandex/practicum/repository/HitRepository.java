@@ -17,7 +17,7 @@ public interface HitRepository extends JpaRepository<Hit, Long> {
             "WHERE h.timestamp BETWEEN ?1 AND ?2 " +
             "AND h.uri IN (?3) " +
             "GROUP BY h.app, h.uri " +
-            "ORDER BY hits")
+            "ORDER BY hits DESC")
     List<StatsDto> findUniqueHitsByUris(LocalDateTime start, LocalDateTime end, List<String> uris);
 
     @Query("SELECT h.app, h.uri, COUNT(h.uri) AS hits " +
@@ -25,20 +25,20 @@ public interface HitRepository extends JpaRepository<Hit, Long> {
             "WHERE h.timestamp BETWEEN ?1 AND ?2 " +
             "AND h.uri IN (?3) " +
             "GROUP BY h.app, h.uri " +
-            "ORDER BY hits")
+            "ORDER BY hits DESC")
     List<StatsDto> findHitsByUris(LocalDateTime start, LocalDateTime end, List<String> uris);
 
     @Query("SELECT h.app, h.uri, COUNT(DISTINCT h.uri) AS hits " +
             "FROM Hit h " +
             "WHERE h.timestamp BETWEEN ?1 AND ?2 " +
             "GROUP BY h.app, h.uri " +
-            "ORDER BY hits")
+            "ORDER BY hits DESC")
     List<StatsDto> findUniqueHits(LocalDateTime start, LocalDateTime end);
 
     @Query("SELECT h.app, h.uri, COUNT(h.uri) AS hits " +
             "FROM Hit h " +
             "WHERE h.timestamp BETWEEN ?1 AND ?2 " +
             "GROUP BY h.app, h.uri " +
-            "ORDER BY hits")
+            "ORDER BY hits DESC")
     List<StatsDto> findHits(LocalDateTime start, LocalDateTime end);
 }
