@@ -121,6 +121,7 @@ public class EventServiceImpl implements EventService {
             event.setViews(Long.valueOf(list.get(0).getHits()));
         }
 
+        event.setViews(event.getViews() + 1);
         log.info("Событие по ID: {} получено из базы данных: {}.", eventId, event);
         return EventMapper.toEventFullDto(event);
     }
