@@ -22,7 +22,7 @@ public class StatController {
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     @PostMapping("/hit")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.CREATED)
     public void saveUserRequestInfo(@RequestBody HitDto hitDto) {
         log.info("Получен POST запрос на сохранение информации запроса пользователя. Входящие данные: \n {}", hitDto);
         statService.saveHit(hitDto);
