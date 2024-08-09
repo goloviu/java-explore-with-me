@@ -3,6 +3,7 @@ package ru.yandex.practicum.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.dto.HitDto;
@@ -21,6 +22,7 @@ public class StatController {
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     @PostMapping("/hit")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public void saveUserRequestInfo(@RequestBody HitDto hitDto) {
         log.info("Получен POST запрос на сохранение информации запроса пользователя. Входящие данные: \n {}", hitDto);
         statService.saveHit(hitDto);
