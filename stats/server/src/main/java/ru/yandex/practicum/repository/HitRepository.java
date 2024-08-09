@@ -11,12 +11,6 @@ import java.util.List;
 
 @Repository
 public interface HitRepository extends JpaRepository<Hit, Long> {
-    @Query(value = "select app, uri, count(ip) as hits " +
-            "from hits h " +
-            "where request_dt between ?1 and ?2 " +
-            "group by app, uri " +
-            "order by hits desc", nativeQuery = true)
-    List<StatsDto> findHits(LocalDateTime start, LocalDateTime end);
 
     @Query(value = "select app, uri, count(distinct ip) as hits " +
             "from hits h " +
@@ -26,12 +20,12 @@ public interface HitRepository extends JpaRepository<Hit, Long> {
             "order by hits desc", nativeQuery = true)
     List<StatsDto> findUniqueHitsByUris(LocalDateTime start, LocalDateTime end, List<String> uris);
 
-    @Query(value = "select app, uri, count(ip) as hits " +
-            "from hits h " +
-            "where request_dt between ?1 and ?2 " +
-            "and uri in ?3 " +
-            "group by app, uri " +
-            "order by hits desc", nativeQuery = true)
+    @Query("SELECT h.app, h.uri, COUNT(h.uri) AS hits " +
+            "FROM Hit h " +
+            "WHERE h.timestamp BETWEEN ?1 AND ?2 " +
+            "AND h.uri IN (?3) " +
+            "GROUP BY h.app, h.uri " +
+            "ORDER BY hits DESC")
     List<StatsDto> findHitsByUris(LocalDateTime start, LocalDateTime end, List<String> uris);
 
     @Query(value = "select app, uri, count(distinct ip) as hits " +
@@ -40,4 +34,11 @@ public interface HitRepository extends JpaRepository<Hit, Long> {
             "group by app, uri " +
             "order by hits desc", nativeQuery = true)
     List<StatsDto> findUniqueHits(LocalDateTime start, LocalDateTime end);
+
+    @Query("SELECT h.app, h.uri, COUNT(h.uri) AS hits " +
+            "FROM Hit h " +
+            "WHERE h.timestamp BETWEEN ?1 AND ?2 " +
+            "GROUP BY h.app, h.uri " +
+            "ORDER BY hits DESC")
+    List<StatsDto> findHits(LocalDateTime start, LocalDateTime end);
 }
