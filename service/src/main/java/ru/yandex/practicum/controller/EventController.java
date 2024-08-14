@@ -176,8 +176,18 @@ public class EventController {
         return requestService.getAllRequestsForEventCreatedByUser(userId, eventId);
     }
 
-    @PatchMapping("/users/{userId}/events/{eventId}/requests")
+    @PatchMapping("/users/{userId}/events/{eventId}/requests/")
     public EventRequestStatusUpdateResultDto updateRequestsStatusForEventCreatedByUser(
+            @PathVariable Long userId,
+            @PathVariable Long eventId,
+            @Valid @RequestBody EventRequestStatusUpdateRequestDto eventDto) {
+        log.info("Получен PATCH запрос на обновление статуса заявок на участие в событии с ID: {}, созданного пользователем: {}. " +
+                "Стало:\n {}", eventId, userId, eventDto);
+        return requestService.updateRequestsStatusForEventCreatedByUser(userId, eventId, eventDto);
+    }
+
+    @PatchMapping("/users/{userId}/events/{eventId}/requests")
+    public EventRequestStatusUpdateResultDto updateRequestsStatusForEventCreatedByUserDuplicated(
             @PathVariable Long userId,
             @PathVariable Long eventId,
             @Valid @RequestBody EventRequestStatusUpdateRequestDto eventDto) {
