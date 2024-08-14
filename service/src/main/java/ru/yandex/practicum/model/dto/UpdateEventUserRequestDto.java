@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import ru.yandex.practicum.enums.RequestStateAction;
 
-import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.Positive;
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 @Data

@@ -3,7 +3,7 @@ package ru.yandex.practicum.model;
 import lombok.*;
 import ru.yandex.practicum.enums.RequestStatus;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Data

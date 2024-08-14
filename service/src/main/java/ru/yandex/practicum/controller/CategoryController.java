@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.model.dto.CategoryDto;
 import ru.yandex.practicum.service.CategoryService;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import java.util.List;
 
 @RestController

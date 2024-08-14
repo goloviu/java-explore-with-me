@@ -15,9 +15,9 @@ import ru.yandex.practicum.service.EventService;
 import ru.yandex.practicum.service.RatingService;
 import ru.yandex.practicum.service.RequestService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
 

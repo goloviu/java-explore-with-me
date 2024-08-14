@@ -5,7 +5,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import ru.yandex.practicum.enums.EventStateAction;
 
-import javax.validation.constraints.Positive;
+import jakarta.validation.constraints.Positive;
 import java.time.LocalDateTime;
 
 @Data

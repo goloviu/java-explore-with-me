@@ -3,8 +3,8 @@ package ru.yandex.practicum.model;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 
 @Data
 @AllArgsConstructor

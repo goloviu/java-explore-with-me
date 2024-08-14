@@ -5,7 +5,7 @@ import ru.yandex.practicum.enums.EventSortType;
 import ru.yandex.practicum.enums.RatingSortType;
 import ru.yandex.practicum.model.dto.*;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.List;
 

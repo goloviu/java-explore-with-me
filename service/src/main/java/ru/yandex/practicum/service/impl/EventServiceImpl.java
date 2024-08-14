@@ -26,7 +26,7 @@ import ru.yandex.practicum.repository.EventRepository;
 import ru.yandex.practicum.repository.UserRepository;
 import ru.yandex.practicum.service.EventService;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.*;

@@ -2,7 +2,7 @@ package ru.yandex.practicum.model;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Data
