@@ -11,8 +11,8 @@ import ru.yandex.practicum.model.dto.NewCompilationDto;
 import ru.yandex.practicum.model.dto.UpdateCompilationRequestDto;
 import ru.yandex.practicum.service.CompilationService;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import java.util.List;
 
 @RestController

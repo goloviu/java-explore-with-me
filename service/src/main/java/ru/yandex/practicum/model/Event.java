@@ -1,9 +1,9 @@
 package ru.yandex.practicum.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 import ru.yandex.practicum.enums.EventState;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data

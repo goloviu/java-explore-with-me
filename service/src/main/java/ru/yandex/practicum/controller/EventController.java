@@ -12,11 +12,12 @@ import ru.yandex.practicum.enums.RatingSortType;
 import ru.yandex.practicum.model.dto.*;
 import ru.yandex.practicum.enums.EventSortType;
 import ru.yandex.practicum.service.EventService;
+import ru.yandex.practicum.service.RatingService;
 import ru.yandex.practicum.service.RequestService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import java.util.List;
 public class EventController {
     private final EventService eventService;
     private final RequestService requestService;
+    private final RatingService ratingService;
 
     private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
@@ -52,6 +54,12 @@ public class EventController {
         log.info("Получен PATCH запрос на обновление события с ID: {}. Было:\n{}\n Стало:\n {}",
                 eventId, eventService.getEventById(eventId), eventDto);
         return eventService.updateEvent(eventId, eventDto);
+    }
+
+    @DeleteMapping("/admin/events/{eventId}/rating")
+    public EventFullDto deleteRating(@PathVariable Long eventId) {
+        log.info("Получен DELETE запрос на удаление (обнуление) рейтинга для события с ID: {}", eventId);
+        return ratingService.deleteRating(eventId);
     }
 
     // ---------------public-----------------
@@ -140,7 +148,25 @@ public class EventController {
         log.info("Получен PATCH запрос на обновление события с ID: {}, созданного пользователем: {}. Было:\n{}\n Стало:\n {}",
                 eventId, userId, eventService.getEventById(eventId), eventDto);
         return eventService.updateEventCreatedByUser(userId, eventId, eventDto);
+    }
 
+    @PostMapping("/users/{userId}/events/{eventId}/rating")
+    @ResponseStatus(HttpStatus.CREATED)
+    public EventFullDto addRating(@PathVariable Long userId,
+                                  @PathVariable Long eventId,
+                                  @Valid @RequestBody RatingDto ratingDto) {
+        log.info("Получен POST запрос на добавление нового рейтинга: {} пользователем: {} на событие: {}", ratingDto, userId, eventId);
+        return ratingService.addRating(userId, eventId, ratingDto);
+    }
+
+    @PatchMapping("/users/{userId}/events/{eventId}/rating/{ratingId}")
+    public EventFullDto updateRating(@PathVariable Long userId,
+                                     @PathVariable Long eventId,
+                                     @PathVariable Long ratingId,
+                                     @Valid @RequestBody RatingDto ratingDto) {
+        log.info("Получен PATCH запрос на обновление рейтинга с ID: {}, созданного пользователем: {} на событие: {}. " +
+                "Стало:\n {}", ratingId, userId, eventId, ratingDto);
+        return ratingService.updateRating(userId, eventId, ratingId, ratingDto);
     }
 
     @GetMapping("/users/{userId}/events/{eventId}/requests")
@@ -150,8 +176,18 @@ public class EventController {
         return requestService.getAllRequestsForEventCreatedByUser(userId, eventId);
     }
 
-    @PatchMapping("/users/{userId}/events/{eventId}/requests")
+    @PatchMapping("/users/{userId}/events/{eventId}/requests/")
     public EventRequestStatusUpdateResultDto updateRequestsStatusForEventCreatedByUser(
+            @PathVariable Long userId,
+            @PathVariable Long eventId,
+            @Valid @RequestBody EventRequestStatusUpdateRequestDto eventDto) {
+        log.info("Получен PATCH запрос на обновление статуса заявок на участие в событии с ID: {}, созданного пользователем: {}. " +
+                "Стало:\n {}", eventId, userId, eventDto);
+        return requestService.updateRequestsStatusForEventCreatedByUser(userId, eventId, eventDto);
+    }
+
+    @PatchMapping("/users/{userId}/events/{eventId}/requests")
+    public EventRequestStatusUpdateResultDto updateRequestsStatusForEventCreatedByUserDuplicated(
             @PathVariable Long userId,
             @PathVariable Long eventId,
             @Valid @RequestBody EventRequestStatusUpdateRequestDto eventDto) {

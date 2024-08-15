@@ -1,5 +1,6 @@
 package ru.yandex.practicum;
 
+import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class StatsClient extends BaseClient {
     public StatsClient(RestTemplateBuilder builder) {
         super(builder
                 .uriTemplateHandler(new DefaultUriBuilderFactory("http://stats-server:9090"))
-                .requestFactory(HttpComponentsClientHttpRequestFactory::new)
+                .requestFactory(() -> new HttpComponentsClientHttpRequestFactory(HttpClients.createDefault()))
                 .build()
         );
     }
