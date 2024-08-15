@@ -442,6 +442,10 @@ public class EventServiceImpl implements EventService {
     private Map<Long, Long> getEventsHits(List<EventViewStats> list) {
         Map<Long, Long> hits = new HashMap<>();
         for (EventViewStats eventViewStats : list) {
+            if (eventViewStats.getUri() == null) {
+                continue;
+            }
+
             String[] temp = eventViewStats.getUri().split("/");
             Long eventId = Long.parseLong(temp[temp.length - 1]);
             hits.put(eventId, Long.valueOf(eventViewStats.getHits()));
